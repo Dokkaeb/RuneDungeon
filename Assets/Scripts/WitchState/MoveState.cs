@@ -14,6 +14,9 @@ public class MoveState : IWitchState
     {
         //¸¶Âû·Â »ç¿ë
         _witch.Rb.sharedMaterial = _witch._useFriction;
+
+        _witch.Animator.SetBool("IsMove", true);
+        _witch.Animator.SetBool("IsGrounded", true);
     }
 
     public void Exit()

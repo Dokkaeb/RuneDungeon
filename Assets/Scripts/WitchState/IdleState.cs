@@ -17,6 +17,9 @@ public class IdleState : IWitchState
         _witch.Rb.linearVelocity = velocity;
 
         _witch.Rb.sharedMaterial = _witch._useFriction;
+
+        _witch.Animator.SetBool("IsMove", false);
+        _witch.Animator.SetBool("IsGrounded", true);
     }
 
     public void Exit()
@@ -34,6 +37,12 @@ public class IdleState : IWitchState
         if(_witch.MoveInput.x != 0)
         {
             _witch.SetState(new MoveState(_witch));
+            return;
+        }
+
+        if (_witch.InteractInputPressed)
+        {
+            _witch.SetState(new InteractState(_witch));
             return;
         }
     }

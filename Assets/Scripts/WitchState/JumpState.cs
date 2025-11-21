@@ -18,6 +18,8 @@ public class JumpState : IWitchState
 
         //점프 수행중에는 마찰력을 없애서 벽에 붙는거 방지
         _witch.Rb.sharedMaterial = _witch._noFriction;
+
+        _witch.Animator.SetBool("IsGrounded", false);
     }
 
     public void Exit()
@@ -45,7 +47,7 @@ public class JumpState : IWitchState
 
         if (_witch.IsGrounded && velocity.y <= 0.01f)
         {
-            //_witch.Animator.SetBool("IsGrounded", true);
+            _witch.Animator.SetBool("IsGrounded", true);
 
             //입력값있으면 무브,아니면 대기상태로 변경
             if (_witch.MoveInput.x != 0)

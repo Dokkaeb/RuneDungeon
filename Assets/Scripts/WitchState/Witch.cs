@@ -8,9 +8,12 @@ public class Witch : MonoBehaviour
     [SerializeField] float _moveSpeed = 5f;
     [SerializeField] float _jumpForce = 5f;
     bool _jumpInputPressed;
+    bool _interactInputPressed;
     Vector2 _moveInput;
     Rigidbody2D _rb;
     SpriteRenderer _spr;
+    Animator _animator;
+    InteractableItem _interactableItem;
 
     [SerializeField] LayerMask _groundLayer;
     [SerializeField] Transform _groundChecker;
@@ -27,9 +30,12 @@ public class Witch : MonoBehaviour
     public SpriteRenderer Spr => _spr;
     public bool JumpInputPressed => _jumpInputPressed;
     public bool IsGrounded => _isGrounded;
+    public bool InteractInputPressed => _interactInputPressed;
+    public Animator Animator => _animator;
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _spr = GetComponent<SpriteRenderer>();
         SetState(new IdleState(this));
@@ -45,7 +51,25 @@ public class Witch : MonoBehaviour
             );
         _currentState.Update();
         _jumpInputPressed = false;
+        _interactInputPressed = false;
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        InteractableItem item = other.GetComponent<InteractableItem>();
+        if(item != null)
+        {
+            _interactableItem = item;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        // 나가는 오브젝트가 현재 상호작용 가능 아이템과 같다면 참조를 해제합니다.
+        if (other.GetComponent<InteractableItem>() == _interactableItem)
+        {
+            _interactableItem = null;
+        }
+    }
+
     public void SetState(IWitchState newState)
     {
         _currentState?.Exit();
@@ -61,6 +85,21 @@ public class Witch : MonoBehaviour
         if (ctx.started)
         {
             _jumpInputPressed = true;
+        }
+    }
+    public void OnInteract(InputAction.CallbackContext ctx)
+    {
+        if(ctx.started)
+        {
+            _interactInputPressed = true;
+        }
+    }
+    public void TryInteract()
+    {
+        if(_interactableItem != null)
+        {
+            _interactableItem.TakeBack();
+            _interactableItem = null;
         }
     }
 }

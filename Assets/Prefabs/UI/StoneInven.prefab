@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableImage
   _prefab: {fileID: 1460324353424087896, guid: 54e9cecdf63114743873a4371768eca9, type: 3}
+  _itemDate: {fileID: 11400000, guid: 050b8554ee14d8f4598ba2f875bc5dd3, type: 2}
 --- !u!225 &3059117641557039494
 CanvasGroup:
   m_ObjectHideFlags: 0

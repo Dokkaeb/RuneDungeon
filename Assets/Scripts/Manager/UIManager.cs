@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
         if (!_iconMap.ContainsKey(itemID))
         {
             _iconMap.Add(itemID, iconObject);
+            Debug.Log($"[UIManager] 아이콘 등록: ID={itemID}, Object={iconObject.name}");
         }
         else
         {
@@ -35,10 +36,12 @@ public class UIManager : MonoBehaviour
         if(_iconMap.TryGetValue(itemID, out GameObject icon))
         {
             icon.SetActive(true);
+            Debug.Log($"[UIManager] 아이콘 복원 성공: ID={itemID}, Object={icon.name}");
         }
         else
         {
             Debug.LogWarning($"{itemID}없음");
+            Debug.LogWarning($"[UIManager] 아이콘 복원 실패: {itemID}없음. 등록된 키 목록: {string.Join(", ", _iconMap.Keys)}");
         }
     }
 }

@@ -5,5 +5,4 @@ public class ItemData : ScriptableObject
 {
     public string ItemID;
     public GameObject prefab;
-    public Sprite sprite;
 }

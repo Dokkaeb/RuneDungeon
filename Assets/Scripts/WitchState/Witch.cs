@@ -13,7 +13,7 @@ public class Witch : MonoBehaviour
     Rigidbody2D _rb;
     SpriteRenderer _spr;
     Animator _animator;
-    InteractableItem _interactableItem;
+    IInteractable _currentInteractable;
 
     [SerializeField] LayerMask _groundLayer;
     [SerializeField] Transform _groundChecker;
@@ -55,18 +55,18 @@ public class Witch : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        InteractableItem item = other.GetComponent<InteractableItem>();
-        if(item != null)
+        IInteractable interactable = other.GetComponent<IInteractable>();
+        if(interactable != null)
         {
-            _interactableItem = item;
+            _currentInteractable = interactable;
         }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
         // 나가는 오브젝트가 현재 상호작용 가능 아이템과 같다면 참조를 해제합니다.
-        if (other.GetComponent<InteractableItem>() == _interactableItem)
+        if (other.GetComponent<IInteractable>() == _currentInteractable)
         {
-            _interactableItem = null;
+            _currentInteractable = null;
         }
     }
 
@@ -96,10 +96,10 @@ public class Witch : MonoBehaviour
     }
     public void TryInteract()
     {
-        if(_interactableItem != null)
+        if(_currentInteractable != null)
         {
-            _interactableItem.TakeBack();
-            _interactableItem = null;
+            _currentInteractable.Interact(this);
+            
         }
     }
 }

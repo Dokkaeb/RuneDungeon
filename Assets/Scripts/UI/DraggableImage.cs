@@ -11,8 +11,6 @@ public class DraggableImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     [SerializeField] GameObject _prefab;
     [SerializeField] private ItemData _itemDate;
     
-    
-
     private void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
@@ -77,7 +75,7 @@ public class DraggableImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
         GameObject spawnObj = Instantiate(_itemDate.prefab, worldPoint,Quaternion.identity);
 
-        InteractableItem item = spawnObj.GetComponent<InteractableItem>();
+        TakeBackToInven item = spawnObj.GetComponent<TakeBackToInven>();
         if(item != null)
         {
             item.Initialize(_itemDate);

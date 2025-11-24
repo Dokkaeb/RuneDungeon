@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractableItem : MonoBehaviour
+public class TakeBackToInven : MonoBehaviour, IInteractable
 {
     public ItemData _data;
     
@@ -10,6 +10,11 @@ public class InteractableItem : MonoBehaviour
     public void Initialize(ItemData data)
     {
         _data = data;
+    }
+
+    public void Interact(Witch interactor)
+    {
+        TakeBack();
     }
 
     public void TakeBack()

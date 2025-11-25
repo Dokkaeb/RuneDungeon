@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance{  get; private set; }
 
     [SerializeField] private HpBarView _hpUI;
+    [SerializeField] private TextMeshProUGUI _interactGuide;
 
     private Dictionary<string,GameObject> _iconMap = new Dictionary<string,GameObject>();
 
@@ -19,6 +21,13 @@ public class UIManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+    }
+    private void Start()
+    {
+        if(_interactGuide != null)
+        {
+            _interactGuide.gameObject.SetActive(false);
         }
     }
     public void InitUI(Witch player)
@@ -51,6 +60,21 @@ public class UIManager : MonoBehaviour
         {
             Debug.LogWarning($"{itemID}없음");
             Debug.LogWarning($"[UIManager] 아이콘 복원 실패: {itemID}없음. 등록된 키 목록: {string.Join(", ", _iconMap.Keys)}");
+        }
+    }
+
+    public void ShowInteractGuide()
+    {
+        if( _interactGuide != null)
+        {
+            _interactGuide.gameObject.SetActive(true);
+        }
+    }
+    public void HideInteractGuide()
+    {
+        if(_interactGuide != null)
+        {
+            _interactGuide.gameObject.SetActive(false);
         }
     }
 }

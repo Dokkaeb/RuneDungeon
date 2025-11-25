@@ -80,6 +80,10 @@ public class Witch : MonoBehaviour
         if(interactable != null)
         {
             _currentInteractable = interactable;
+            if(UIManager.Instance != null )
+            {
+                UIManager.Instance.ShowInteractGuide();
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -88,6 +92,10 @@ public class Witch : MonoBehaviour
         if (other.GetComponent<IInteractable>() == _currentInteractable)
         {
             _currentInteractable = null;
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.HideInteractGuide();
+            }
         }
     }
 

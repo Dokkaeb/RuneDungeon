@@ -44,7 +44,7 @@ public class DraggableImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
         if (!IsDroppedOnUI(eventData))
         {
-            SpawnCubeAtMousePosition();
+            SpawnCubeAtMousePosition(eventData.position);
             gameObject.SetActive(false); //만약 UI이미지 없애버릴거면
             
             transform.SetParent(_originParent);
@@ -63,9 +63,9 @@ public class DraggableImage : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         return eventData.pointerCurrentRaycast.gameObject != null;
     }
 
-    private void SpawnCubeAtMousePosition()
+    private void SpawnCubeAtMousePosition(Vector2 screenPosition)
     {
-        Vector3 screenPoint = Mouse.current.position.ReadValue(); //마우스 위치 받아오기
+        Vector3 screenPoint = screenPosition;
 
         screenPoint.z = Camera.main.nearClipPlane;
 

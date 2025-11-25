@@ -18,6 +18,7 @@ public class SavePoint : MonoBehaviour, IInteractable
                 GameManager.Instance.SetRespawnPoint(_respawnPos);
             }
             _isActivated = true;
+            GetComponent<SpriteRenderer>().color = Color.yellow;
         }
     }
 }

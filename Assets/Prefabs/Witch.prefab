@@ -90,6 +90,8 @@ MonoBehaviour:
   _groundCheckDistance: 1
   _noFriction: {fileID: 6200000, guid: 8021f4f1712e11e4ea6f4052e9c5af20, type: 2}
   _useFriction: {fileID: 6200000, guid: 73efeaa1f089b63498266e53ec66c706, type: 2}
+  _knockbackForce: 5
+  _hitDuration: 0.2
 --- !u!212 &2292935808011862856
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136,7 +138,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1458698999662525114, guid: e8206a7d0fb0b430ba960d025b4488f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

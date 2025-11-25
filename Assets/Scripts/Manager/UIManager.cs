@@ -5,6 +5,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance{  get; private set; }
 
+    [SerializeField] private HpBarView _hpUI;
+
     private Dictionary<string,GameObject> _iconMap = new Dictionary<string,GameObject>();
 
     private void Awake()
@@ -17,6 +19,13 @@ public class UIManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+    }
+    public void InitUI(Witch player)
+    {
+        if(_hpUI != null)
+        {
+            _hpUI.Init(player);
         }
     }
     public void RegisterIcon(string itemID,GameObject iconObject)

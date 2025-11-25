@@ -17,6 +17,15 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        Witch player = FindObjectOfType<Witch>();
+        if (player != null && UIManager.Instance != null)
+        {
+            UIManager.Instance.InitUI(player);
+        }
+
+    }
     public void SetRespawnPoint(Vector3 newPoint)
     {
         _respawnPoint = newPoint;

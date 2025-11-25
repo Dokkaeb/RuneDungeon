@@ -1,28 +1,47 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Witch : MonoBehaviour
 {
+    [Header("state")]
     IWitchState _currentState;
     [SerializeField] float _moveSpeed = 5f;
     [SerializeField] float _jumpForce = 5f;
     bool _jumpInputPressed;
     bool _interactInputPressed;
     Vector2 _moveInput;
-    Rigidbody2D _rb;
-    SpriteRenderer _spr;
-    Animator _animator;
     IInteractable _currentInteractable;
 
+    [Header("땅체크")]
     [SerializeField] LayerMask _groundLayer;
     [SerializeField] Transform _groundChecker;
     [SerializeField] float _groundCheckDistance = 0.1f;
     bool _isGrounded;
 
+    [Header("피직스마테리얼")]
     public PhysicsMaterial2D _noFriction;
     public PhysicsMaterial2D _useFriction;
 
+    [Header("MVC")]
+    private int _currentHp;
+    private int _maxHp=10;
+    public event Action<int,int> OnHpChanged;
+
+    [Header("넉백설정")]
+    [SerializeField] private float _knockbackForce = 5f;
+    [SerializeField] private float _hitDuration = 0.2f;
+ 
+    Rigidbody2D _rb;
+    SpriteRenderer _spr;
+    Animator _animator;
+
+    //프로퍼티
+    public int CurrentHp => _currentHp;
+    public int MaxHp => _maxHp;
+    public float KnockbackForce => _knockbackForce;
+    public float HitDuration => _hitDuration;
     public float MoveSpeed => _moveSpeed;
     public float JumpForce => _jumpForce;
     public Vector2 MoveInput => _moveInput;
@@ -35,9 +54,11 @@ public class Witch : MonoBehaviour
 
     private void Awake()
     {
+        _currentHp = _maxHp;
         _animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _spr = GetComponent<SpriteRenderer>();
+        OnHpChanged?.Invoke(_currentHp, _maxHp);
         SetState(new IdleState(this));
     }
 
@@ -112,8 +133,24 @@ public class Witch : MonoBehaviour
 
     public void Respawn()
     {
-        //hp 회복
+        _currentHp = _maxHp;
+        OnHpChanged?.Invoke(_currentHp, _maxHp);
         _rb.linearVelocity = Vector2.zero;
 
+    }
+    public void TakeDamager(int damage,Vector3 hitPos)
+    {
+        if (_currentHp <= 0)
+        {
+            _currentHp = 0;
+            Die();
+            return;
+        }
+
+        SetState(new HitState(this, hitPos));
+
+        _currentHp -= damage;
+        _currentHp = Mathf.Max(0, _currentHp);
+        OnHpChanged?.Invoke(_currentHp, _maxHp);
     }
 }

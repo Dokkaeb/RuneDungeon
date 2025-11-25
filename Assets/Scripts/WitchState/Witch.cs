@@ -102,4 +102,18 @@ public class Witch : MonoBehaviour
             
         }
     }
+    public void Die()
+    {
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.RespawnPlayer(this);
+        }
+    }
+
+    public void Respawn()
+    {
+        //hp È¸º¹
+        _rb.linearVelocity = Vector2.zero;
+
+    }
 }

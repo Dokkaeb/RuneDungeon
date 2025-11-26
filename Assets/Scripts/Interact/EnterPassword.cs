@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class EnterPassword : MonoBehaviour, IInteractable
 {
     [SerializeField] GameObject _passwordPanel;
+    [SerializeField] GameObject _closeGate;
+    [SerializeField] GameObject _openGate;
     [SerializeField] string _password = "1234";
     private int _passwordLength;
     private string _inputString;
@@ -82,6 +84,9 @@ public class EnterPassword : MonoBehaviour, IInteractable
         {
             ClosePanel();
             //¹®¿­±â
+            _openGate.SetActive(true);
+            _closeGate.SetActive(false);
+            gameObject.SetActive(false);
         }
         else
         {

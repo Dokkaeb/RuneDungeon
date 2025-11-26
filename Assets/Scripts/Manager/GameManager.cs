@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        Witch player = FindObjectOfType<Witch>();
+        Witch player = FindAnyObjectByType<Witch>();
         if (player != null && UIManager.Instance != null)
         {
             UIManager.Instance.InitUI(player);

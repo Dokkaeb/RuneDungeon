@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {  get; private set; }
     private Vector3 _respawnPoint;
+    public bool _isPaused {  get; private set; }=false;
 
     private void Awake()
     {
@@ -35,5 +36,30 @@ public class GameManager : MonoBehaviour
         player.transform.position = _respawnPoint;
         player.Respawn();
         player.SetState(new IdleState(player));
+    }
+
+    public void SetGamePause(bool pause)
+    {
+        _isPaused = pause;
+
+        if (pause)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+    }
+
+    public void ExitGame()
+    {
+        Time.timeScale = 1f;
+
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }

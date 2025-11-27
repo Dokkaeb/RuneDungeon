@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    private int _damage = 1;
+    [SerializeField]private int _damage = 1;
     private float _attackDelay = 1f;
     private float _nextAttack;
 

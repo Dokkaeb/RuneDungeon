@@ -111,7 +111,7 @@ public class DragLauncher : MonoBehaviour
             dragVector = dragVector.normalized * _maxDragDistance;
         }
         //당기는 반대로 움직이기
-        transform.position = _objPos + dragVector;
+        transform.position = _objPos - dragVector;
         //드래그 반대로 힘 발생
         _currentDragDir = -dragVector;
         //조준선 위치설정
@@ -179,10 +179,18 @@ public class DragLauncher : MonoBehaviour
             if (_projectileCam != null)
             {
                 _projectileCam.Priority.Value = _originalPriority;
+                _projectileCam.Follow = null;
             }
 
-            // 투사체 파괴
-            Destroy(gameObject);
+            _rb.linearVelocity = Vector2.zero;
+            _rb.angularVelocity = 0f;
+            _rb.bodyType = RigidbodyType2D.Kinematic;
+
+            transform.position = _objPos;
+
+            enabled = true;
+
+            _isDragging = false;
         }
     }
     //목표 도달하면 실행시킬 코루틴
@@ -195,6 +203,7 @@ public class DragLauncher : MonoBehaviour
         if (_projectileCam != null)
         {
             _projectileCam.Priority.Value = _originalPriority;
+            _projectileCam.Follow = null;
         }
 
         // 투사체 파괴

@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
 using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Patrol", story: "[Self] Patrol [WayPoints] with [MoveSpeed]", category: "Action", id: "c594ad0e51edabbf12c09b60d970fdbe")]
-public partial class PatrolAction : Action
+[NodeDescription(name: "Chase", story: "[Self] Chase [Player] with [MoveSpeed]", category: "Action", id: "aaa3828eea785ea5ed6dbf3b039a6052")]
+public partial class ChaseAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
-    [SerializeReference] public BlackboardVariable<List<GameObject>> WayPoints;
+    [SerializeReference] public BlackboardVariable<GameObject> Player;
     [SerializeReference] public BlackboardVariable<float> MoveSpeed;
 
     protected override Status OnStart()
@@ -20,6 +19,8 @@ public partial class PatrolAction : Action
 
     protected override Status OnUpdate()
     {
+        Vector3 dir = (Player.Value.transform.position - Self.Value.transform.position).normalized;
+        Self.Value.transform.position += dir * MoveSpeed.Value * Time.deltaTime;
         return Status.Success;
     }
 

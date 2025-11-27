@@ -5,7 +5,7 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Detect", story: "[Self] Detect [Player] with [DetectRange]", category: "Action", id: "5bf541e9e3e59b9dd142fe1dc906a1e7")]
+[NodeDescription(name: "Detect", story: "[Self] Detect [Player] with [DetectRange]", category: "Action", id: "43a89924621413e62aacac64b79d5d83")]
 public partial class DetectAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
@@ -19,7 +19,8 @@ public partial class DetectAction : Action
 
     protected override Status OnUpdate()
     {
-        return Status.Success;
+        float distance = Vector2.Distance(Self.Value.transform.position, Player.Value.transform.position);
+        return distance <= DetectRange.Value ? Status.Success : Status.Failure;
     }
 
     protected override void OnEnd()

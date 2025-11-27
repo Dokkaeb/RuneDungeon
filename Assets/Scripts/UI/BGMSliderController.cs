@@ -31,7 +31,7 @@ public class BGMSliderController : MonoBehaviour
     }
     private void OnSliderValueChanged(float value)
     {
-        // SoundManager가 존재할 때만 볼륨 조절 함수 실행
+        
         if (SoundManager.Instance != null)
         {
             SoundManager.Instance.SetMasterVolume(value);

@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
             Debug.LogWarning("[UIManager] 핵심 UI 참조 (_interactGuide)가 null입니다. Inspector 연결을 확인하세요.");
             
         }
-        // 2. 새 씬에서 플레이어 오브젝트를 찾아서 InitUI를 다시 호출
+        //새 씬에서 플레이어 오브젝트를 찾아서 InitUI를 다시 호출
         Witch player = FindAnyObjectByType<Witch>();
         if (player != null)
         {
@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
             GameObject rootObject = iconObject.transform.root.gameObject;
             if (rootObject.GetComponent<UIManager>() == null) // UIManager가 붙어있는 오브젝트와 동일하지 않다면
             {
-                // 3. 최상위 부모 오브젝트에 DontDestroyOnLoad를 적용하여
+                //최상위 부모 오브젝트에 DontDestroyOnLoad를 적용하여
                 // 아이콘 오브젝트와 그 부모 (Canvas 등)가 씬 전환 시 파괴되지 않도록 합니다.
                 DontDestroyOnLoad(rootObject);
             }
